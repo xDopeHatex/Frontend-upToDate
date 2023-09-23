@@ -13,6 +13,7 @@ import {BuiltInProviderType} from "@node_modules/next-auth/providers";
 
 
 const Navbar = () => {
+    const {data: session} = useSession()
 
     const isUserLoggedIn = true
     const [providers, setProviders] = useState(null);
@@ -21,7 +22,7 @@ const Navbar = () => {
 
     useEffect(() => {
 
-        const setProv = async () => {
+        const setUpProviders = async () => {
             const response: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null = await getProviders()
 
             if (response !== null) {
@@ -31,7 +32,7 @@ const Navbar = () => {
 
         }
 
-        setProv()
+        setUpProviders()
 
 
     }, [])
@@ -43,12 +44,12 @@ const Navbar = () => {
                 <p className='logo_text'>Frontend upToDate</p>
             </Link>
             <div className="sm:flex hidden">
-                {isUserLoggedIn ? (
+                {session?.user ? (
                     <div className='flex gap-3 md:gap-5 '><Link href='/create-prompt' className='black_btn'>Create Post</Link>
 
                         <button type='button' onClick={() => signOut} className='outline_btn'>Sign Out</button>
                         <Link href='/profile'>
-                            <Image src='/assets/images/logo.svg'  width={37} height={37} className='rounded-full' alt='profile'/>
+                            <Image src={ session.user.image ? session.user.image : `/assets/images/logo.svg`}  width={37} height={37} className='rounded-full' alt='profile'/>
                         </Link>
 
                     </div>
@@ -59,16 +60,16 @@ const Navbar = () => {
                             onClick={() => signIn(provider.id)}
                                     className='black_btn'
                             >
-
+Sign In
                             </button>
                         )
                     })}
                 </>)}
             </div>
             <div className='sm:hidden flex relative'>
-                {isUserLoggedIn ? (
+                {session?.user ? (
                     <div className='flex'>
-                        <Image src='/assets/images/logo.svg' height={30} width={30} alt='Frontend upToDate logo' className='object-contain'
+                        <Image src={ session.user.image ? session.user.image : `/assets/images/logo.svg`} height={37} width={37} alt='Frontend upToDate logo' className='object-contain'
                         onClick={() => setToggleDropdown((prev) => !prev)}
                         />
                         {toggleDropdown && (
