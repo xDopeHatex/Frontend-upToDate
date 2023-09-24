@@ -47,7 +47,7 @@ const Navbar = () => {
                 {session?.user ? (
                     <div className='flex gap-3 md:gap-5 '><Link href='/create-prompt' className='black_btn'>Create Post</Link>
 
-                        <button type='button' onClick={() => signOut} className='outline_btn'>Sign Out</button>
+                        <button type='button' onClick={() => signOut()} className='outline_btn'>Sign Out</button>
                         <Link href='/profile'>
                             <Image src={ session.user.image ? session.user.image : `/assets/images/logo.svg`}  width={37} height={37} className='rounded-full' alt='profile'/>
                         </Link>
@@ -82,7 +82,8 @@ My Profile
                                 </Link>
                                 <button className='mt-5 w-full black_btn' type='button' onClick={() => {
                                 setToggleDropdown(false);
-                                signOut();}
+
+                                signOut()}
                                 }>Sign Out</button>
                             </div>
                         )}
@@ -94,7 +95,7 @@ My Profile
                             <button type='button' key={provider.name}
                                     onClick={() => signIn(provider.id)}
                                     className='black_btn'
-                            >
+                            >Sign In
 
                             </button>
                         )
