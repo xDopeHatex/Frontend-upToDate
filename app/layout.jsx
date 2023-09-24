@@ -1,26 +1,29 @@
 import '@styles/globals.css'
-import {Metadata} from "next";
 
-import { ReactNode } from 'react';
-export const metadata: Metadata = {
+import Navbar from "../components/Navbar";
+import Provider from "../components/Provider";
+
+
+export const metadata = {
     title: 'Frontend upToDate',
-    description: "Discover & Share Frontend Tips"
+    description: "Discover & Share AI-Powered Prompts"
 }
 
-type Props = {
-    children: ReactNode
-}
 
-const RootLayout = ({children} : Props) => {
+
+const RootLayout = ({children}) => {
     return (
         <html lang='en'>
         <body>
+        <Provider >
         <div className='main'>
           <div className='gradient'/>
         </div>
         <main className='app'>
+            <Navbar/>
             {children}
         </main>
+        </Provider>
         </body>
 
         </html>
